@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.PathInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
@@ -21,25 +22,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        besierView = findViewById(R.id.bview);
-        pullView = (PullView) findViewById(R.id.pullView);
+//        pullView = (PullView) findViewById(R.id.pullView);
 
-//        img = findViewById(R.id.img);
-//        img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                ObjectAnimator animator = ObjectAnimator.ofFloat(img, "translationY", 0, 100);
-////                animator.setDuration(1000);
-////                animator.setInterpolator(new BounceInterpolator());
-////                animator.start();
-//
-//                Path path = new Path();
-//                path.cubicTo(0.2f, 0f, 0.1f, 1f, 0.5f, 1f);
-//                path.lineTo(1f, 1f);
-//                ObjectAnimator animator = ObjectAnimator.ofFloat(img, View.TRANSLATION_X, 500);
-//                animator.setInterpolator(PathInterpolatorCompat.create(path));
+        img = findViewById(R.id.img);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ObjectAnimator animator = ObjectAnimator.ofFloat(img, "translationY", 0, 100);
+//                animator.setDuration(1000);
+//                animator.setInterpolator(new BounceInterpolator());
 //                animator.start();
-//            }
-//        });
+
+                Path path = new Path();
+                path.moveTo(0, 100);
+//                path.quadTo(500, 200, 900, 100);
+                ObjectAnimator mAnimator;
+                mAnimator = ObjectAnimator.ofFloat(img, View.X, View.Y, path);
+                mAnimator.setInterpolator(PathInterpolatorCompat.create(0.5f,1f));//以贝塞尔曲线的变化率作为插值器
+                mAnimator.setDuration(2000);
+                mAnimator.start();
+
+
+
+
+            }
+        });
 
 
 
