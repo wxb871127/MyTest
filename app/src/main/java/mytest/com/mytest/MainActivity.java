@@ -100,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
         map.put("tz", "68");
         map.put("sg", "174");
         try {
-            ExpressionParse.parseExpression("tz/Math.pow(sg/ 100 , Math.sqrt(4))+Math.sin(30)", map);
+            String ret = ExpressionParse.parseExpression("tz/Math.pow(sg/ 100 , Math.sqrt(4))+Math.sin(30)", map);
 //            List<ExpressionFuncOpt> list = ExpressionFuncOpt.getFunctionExpression("tz/Math.pow(sg/ 100 , Math.sqrt(4))+Math.sin(30)");
 //            Log.e("xx","" );
-
+            Toast.makeText(this, ret, Toast.LENGTH_LONG).show();
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -76,4 +76,20 @@ public class ExpressionFuncOpt {
     public static String[] getFunctionParams(){
         return params;
     }
+
+    public static String getFunctionMehod(){
+        return expression.substring(0, expression.indexOf("("));
+    }
+
+    public static String getExpression(){
+        return expression;
+    }
+
+    public static int getStartIndex(){
+        return startIndex;
+    }
+
+    public static int getEndIndex(){
+        return endIndex;
+    }
 }

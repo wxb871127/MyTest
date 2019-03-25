@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ import static expression.ExpressionFuncOpt.isFunction;
  */
 public class ExpressionOpt {
     // 运算符优先级map
-    private static final Map<String, Integer> OPT_PRIORITY_MAP = new HashMap<String, Integer>() {
+    public static final Map<String, Integer> OPT_PRIORITY_MAP = new HashMap<String, Integer>() {
         private static final long serialVersionUID = 6968472606692771458L;
         {
             put("(", 0);
@@ -44,6 +45,15 @@ public class ExpressionOpt {
             put("=", 20);
         }
     };
+
+    public static boolean isExpression(String str){
+        Set<String> sets =  OPT_PRIORITY_MAP.keySet();
+        for(String set : sets){
+            if(str.contains(set))
+                return true;
+        }
+        return false;
+    }
 
     // 判断是否为运算符
     public static boolean isOption(String str){
