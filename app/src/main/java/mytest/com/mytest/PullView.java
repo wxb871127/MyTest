@@ -2,6 +2,7 @@ package mytest.com.mytest;
 
 import android.animation.ValueAnimator;
 import android.content.Context; import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
@@ -88,7 +89,8 @@ public class PullView extends View {
         double radian = Math.toRadians(angle);
         float x = (float) (Math.sin(radian) * cRadius);
         float y = (float) (Math.cos(radian) * cRadius);
-        lEndPointX = cPointX - x; lEndPointY = cPointY + y; //控制点y坐标变化
+        lEndPointX = cPointX - x;
+        lEndPointY = cPointY + y; //控制点y坐标变化
         lControlPointY = getValueByLine(0, endControlY, progress); //控制点与结束定之前的高度
         float tHeight = lEndPointY - lControlPointY; //控制点与x坐标的距离
         float tWidth = (float) (tHeight / Math.tan(radian));
@@ -163,14 +165,18 @@ public class PullView extends View {
         float tranX = (getWidth() - getValueByLine(getWidth(), mTargetWidth, mProgress)) / 2;
         canvas.translate(tranX, 0);
         canvas.drawPath(mPath, mPathPaint); //画圆
+//        mCirclePaint.setColor(Color.BLACK);
         canvas.drawCircle(mCirclePointX, mCirclePointY, mCircleRadius, mCirclePaint);
         Drawable drawable = mContent;
         if (drawable != null) {
-        canvas.save(); //剪切矩形区域
-        canvas.clipRect(drawable.getBounds()); //绘制
-        drawable.draw(canvas); canvas.restore();
+            canvas.save(); //剪切矩形区域
+            canvas.clipRect(drawable.getBounds()); //绘制
+            drawable.draw(canvas);
+            canvas.restore();
         }
         canvas.restoreToCount(count);
+
+
     }
         /**
      * 设置进度
