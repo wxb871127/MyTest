@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".PullActivity"/>
+        <activity android:name=".TabActivity"/>
     </application>
 
 </manifest>

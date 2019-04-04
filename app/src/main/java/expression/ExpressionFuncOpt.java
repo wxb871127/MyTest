@@ -1,5 +1,7 @@
 package expression;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -18,8 +20,6 @@ public class ExpressionFuncOpt {
     };
     private static String[] params;//形参列表
     private static String expression;//完整表达式
-    private static int startIndex;//表达式中开始索引
-    private static int endIndex;//表达式中结束索引
 
 
     public static String getFuncParamsSeparator(){
@@ -36,7 +36,7 @@ public class ExpressionFuncOpt {
         for (String s : functions) {
             Pattern pattern = Pattern.compile(s);
             Matcher matcher = pattern.matcher(str);
-            while (matcher.find())
+            if (matcher.find())
                 return true;
         }
         return false;
@@ -54,8 +54,6 @@ public class ExpressionFuncOpt {
                 find = true;
                 ExpressionFuncOpt opt = new ExpressionFuncOpt();
                 opt.expression = matcher.group();
-                opt.startIndex = matcher.start();
-                opt.endIndex = matcher.end();
                 opt.params = getFunctionParams(matcher.group());
                 list.add(opt);
             }
@@ -83,13 +81,5 @@ public class ExpressionFuncOpt {
 
     public static String getExpression(){
         return expression;
-    }
-
-    public static int getStartIndex(){
-        return startIndex;
-    }
-
-    public static int getEndIndex(){
-        return endIndex;
     }
 }

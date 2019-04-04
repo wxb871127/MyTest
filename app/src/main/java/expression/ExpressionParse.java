@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
+import static expression.ExpressionFuncOpt.getFunctionExpression;
 import static expression.ExpressionFuncOpt.isFunction;
 import static expression.ExpressionOpt.OPT_PRIORITY_MAP;
 import static expression.ExpressionOpt.isExpression;
@@ -61,30 +62,24 @@ public class ExpressionParse {
         List<ExpressionFuncOpt> list = ExpressionFuncOpt.getFunctionExpression(expression);
         if(list != null || list.size() > 0){
             for(ExpressionFuncOpt opt : list){
-                expression = expression.replace(opt.getExpression(), computeFunctionExpression(opt.getExpression()));
+                expression = expression.replace(opt.getExpression(), computeFunctionExpression(opt));
             }
         }
         return computePureExpression(expression);
     }
 
     //计算函数表达式的值
-    private static String computeFunctionExpression(String expression){
-        List<ExpressionFuncOpt> list = ExpressionFuncOpt.getFunctionExpression(expression);
-        if(list == null || list.size() == 0)
-            return expression;
-        Stack<ExpressionFuncOpt> stack = new Stack<>();
-        for(ExpressionFuncOpt opt : list){//处理每个函数
-           stack.push(opt);
-           String[] params = opt.getFunctionParams();
-           for(int i=0; i<params.length; i++){
-               if(isFunction(params[i]))
-                   params[i] = computeFunctionExpression(params[i]);
-               else if(isExpression(params[i]))
-                   params[i] = computePureExpression(params[i]);
-           }
-           return computeFunction(opt);
+    private static String computeFunctionExpression(ExpressionFuncOpt opt){
+        String[] params = opt.getFunctionParams();
+        for(int i=0; i<params.length; i++){
+           if(isFunction(params[i])) {
+               getFunctionExpression(params[i]);
+//               params[i] = computeFunctionExpression(params[i]);
+           }else if(isExpression(params[i]))
+               params[i] = computePureExpression(params[i]);
         }
-        return null;
+        return computeFunction(opt);
+//    return null;
     }
 
     private static String computeFunction(ExpressionFuncOpt opt){
